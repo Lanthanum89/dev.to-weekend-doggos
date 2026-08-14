@@ -56,6 +56,22 @@ body {
   box-shadow: 0px 0px 0 0 var(--ink) !important;
 }
 
+.press {
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+
+.press:hover {
+  transform: translate(-2px, -2px);
+}
+
+.press.hard-shadow:hover {
+  box-shadow: 8px 8px 0 0 var(--ink);
+}
+
+.press.hard-shadow-sm:hover {
+  box-shadow: 6px 6px 0 0 var(--ink);
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(-2deg); }
   50% { transform: translateY(-10px) rotate(2deg); }
@@ -83,8 +99,50 @@ body {
   animation: spin-slow 18s linear infinite;
 }
 
+/* New question sliding in: ease-out only, no overshoot — this repeats every question */
+@keyframes card-in {
+  0% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.card-in {
+  animation: card-in 0.3s ease-out both;
+}
+
+/* Answer options stagger in after the card, each offset a touch further */
+@keyframes option-in {
+  0% { transform: translateY(8px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.option-in {
+  animation: option-in 0.3s ease-out both;
+}
+
+/* Result reveal: a single, low-frequency moment — overshoot earns its keep here */
+@keyframes bounce-in {
+  0% { transform: scale(0.4) rotate(-12deg); opacity: 0; }
+  60% { transform: scale(1.12) rotate(4deg); opacity: 1; }
+  80% { transform: scale(0.96) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.bounce-in {
+  animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Progress dots pop when they become active */
+.dot {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease-out;
+}
+
+.dot-active {
+  transform: scale(1.25);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .float, .spin-slow, .pop-in {
+  .float, .spin-slow, .pop-in, .card-in, .option-in, .bounce-in, .dot {
     animation: none !important;
+    transition: none !important;
   }
 }

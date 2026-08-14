@@ -85,7 +85,7 @@ export default function App() {
           </p>
           <button
             onClick={startQuiz}
-            className="press font-display text-xl sm:text-2xl font-800 text-white px-10 py-4 rounded-2xl hard-border-thick hard-shadow bg-[var(--coral)] transition-transform"
+            className="press font-display text-xl sm:text-2xl font-800 text-white px-10 py-4 rounded-2xl hard-border-thick hard-shadow bg-[var(--coral)]"
             style={{ fontWeight: 800 }}
           >
             Start the quiz
@@ -100,13 +100,13 @@ export default function App() {
             {QUESTIONS.map((_, i) => (
               <div
                 key={i}
-                className={`w-4 h-4 rounded-full hard-border ${i <= qIndex ? '' : 'opacity-30'}`}
+                className={`dot w-4 h-4 rounded-full hard-border ${i <= qIndex ? '' : 'opacity-30'} ${i === qIndex ? 'dot-active' : ''}`}
                 style={{ background: i < qIndex ? 'var(--grass)' : i === qIndex ? 'var(--coral)' : '#fff' }}
               />
             ))}
           </div>
 
-          <div className="bg-white hard-border-thick hard-shadow rounded-3xl p-6 sm:p-8">
+          <div key={qIndex} className="card-in bg-white hard-border-thick hard-shadow rounded-3xl p-6 sm:p-8">
             <p className="font-display text-2xl sm:text-3xl font-700 mb-6" style={{ fontWeight: 700 }}>
               {QUESTIONS[qIndex].prompt}
             </p>
@@ -115,8 +115,8 @@ export default function App() {
                 <button
                   key={i}
                   onClick={() => answer(opt.breed)}
-                  className="press text-left font-bold px-5 py-4 rounded-2xl hard-border hard-shadow-sm transition-transform"
-                  style={{ background: OPTION_COLORS[i % OPTION_COLORS.length] }}
+                  className="press option-in text-left font-bold px-5 py-4 rounded-2xl hard-border hard-shadow-sm"
+                  style={{ background: OPTION_COLORS[i % OPTION_COLORS.length], animationDelay: `${80 + i * 40}ms` }}
                 >
                   {opt.text}
                 </button>
@@ -142,7 +142,7 @@ export default function App() {
               <DogFace
                 color={BREEDS[resultId].color}
                 earStyle={BREEDS[resultId].earStyle}
-                className="w-full h-full"
+                className="bounce-in w-full h-full"
               />
             </div>
             <h2 className="font-display text-2xl sm:text-3xl font-800 mb-3" style={{ fontWeight: 800 }}>
@@ -151,7 +151,7 @@ export default function App() {
             <p className="font-semibold text-base opacity-80 mb-6">{BREEDS[resultId].blurb}</p>
             <button
               onClick={reset}
-              className="press font-display text-lg font-800 text-white px-8 py-3 rounded-2xl hard-border hard-shadow-sm transition-transform"
+              className="press font-display text-lg font-800 text-white px-8 py-3 rounded-2xl hard-border hard-shadow-sm"
               style={{ background: 'var(--ink)', fontWeight: 800 }}
             >
               Play again
